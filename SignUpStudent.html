@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Class System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+</head>
+<body>
+    
+    <form1>
+      
+
+        <h1>Student Registration Form</h1>
+        <p>Name of the student<br><input type="text" id="enterFirstName"><input type="text" id="enterSecondName"></p>
+        <p>Guardian's Name<br><input type="text" id="enterFirstGName"><input type="text" id="enterSecondGName"></p>
+        <p>Date of Birth<br><input type="date" id="enterBirth" name="trip-start" value="2000-01-01" min="2018-01-01" max="2023-01-01"></p>
+        <p>Gender<br>
+            <input type="radio" name="gender" value="female" id="enterGender">Male
+            <input type="radio" name="gender" value="female" id="enterGender"> Female</p>
+        <p>Age<br><input type="number" id="enterAge">Grade<br><input type="number" id="enterGrade"></p>
+        <p>E-mail<br><input type="text" id="enterEmail">Contact Number<br><input type="text" id="enterNumber"></p>
+
+
+
+        <p><input id="image" type="file" onchange="readURL(this)" accept="image/*"><br>
+        <button type="button" onclick="upload()">Upload</button></p>
+
+
+        <button id="insert">Send</button>
+        <div class="FirstPageLink"><p><a href="index.html">Goto First Page</a></p></div>
+    </form1>
+
+        <script type="module">
+
+//------------------------------------getData-----------------------------------//
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAI0yekzN6HXw6KPR0whMpsd0AUQRRwuI4",
+    authDomain: "myclasssystem-a9051.firebaseapp.com",
+    projectId: "myclasssystem-a9051",
+    storageBucket: "myclasssystem-a9051.appspot.com",
+    messagingSenderId: "920203645327",
+    appId: "1:920203645327:web:d418c4f929d4bcb9573bfa"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+        
+        import {getDatabase,set,get,update,remove,ref,child}
+        from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+        
+        const db =getDatabase();
+        
+        
+                    var enterFirstName=document.querySelector("#enterFirstName");
+                    var enterSecondName=document.querySelector("#enterSecondName");
+                    var enterFirstGName=document.querySelector("#enterFirstGName");
+                    var enterSecondGName=document.querySelector("#enterSecondGName");
+                    var enterBirth=document.querySelector("#enterBirth");
+                    var enterGender=document.querySelector("#enterGender");
+                    var enterAge=document.querySelector("#enterAge");
+                    var enterGrade=document.querySelector("#enterGrade");
+                    var enterEmail=document.querySelector("#enterEmail");
+                    var enterNumber=document.querySelector("#enterNumber");
+                    
+                    var insertBtn=document.querySelector("#insert");
+                   
+
+                    function InsertData()
+                    {
+                        set(ref(db,"Student/"+enterFirstName.value ),{
+                            FirstName:enterFirstName.value,
+                            SecondName:enterSecondName.value,
+                            FirstGName:enterFirstGName.value,
+                            SecondGName:enterSecondGName.value,
+                            Birthday:enterBirth.value,
+                            Gender:enterGender.value,
+                            
+                            Age:enterAge.value,
+                            Grade:enterGrade.value,
+                            Email:enterEmail.value,
+                            Number:enterNumber.value,
+                        })
+                        .then(()=>{
+                            alert("Data added Successfully!")
+                        })
+                        .catch((error)=>{
+                            alert(error)
+                        });
+                    }
+
+                    insertBtn.addEventListener('click',InsertData);
+
+    //---------------------------------GetImage----------------------------------------------//
+
+import{getStorage,ref as sRef,uploadBytesResumable,getDownloadURL} 
+from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js";
+                    
+function upload()
+{
+        var image=document.getElementById("image").files[0];
+        var imageName=image.name;
+        var storageRef=firebase.storage().ref('images/'+imageName);
+        var uploadTask=storageRef.put(image);
+
+        uploadTask.on('state_changed',function(snapshot){
+            var progress=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
+            console.log("upload is "+progress +"done");
+        },function(error){
+            console.log(error.message);
+            
+        },function(){
+            uploadTask.snapshot.ref.getDownLoadURL().then(function(downloadURL){
+                console.log(downloadURL);
+            });
+        
+        });
+}
+
+      </script>
+      
+</body>
+</html>

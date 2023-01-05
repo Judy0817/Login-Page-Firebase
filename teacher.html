@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lan="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Teacher</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+      
+            
+        <form1>
+          
+            <h1>Sign Up</h1>
+     
+      <input type="text" id="email" name="email" placeholder="E-mail">
+      <input type="password" id="password" name="password" placeholder="Password">
+
+      <input type="submit" id="login" name="login" value="Login">
+
+            <p><a href="forgotTeacher.html">Forgot Password</a></p>
+            <p><a href="createAccountTeacher.html">Don't Have an Account</a></p>
+            <div class="FirstPageLink"><p><a href="index.html">Goto First Page</a></p></div>
+        </form1>
+    </body>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getDatabase,set,ref,update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged ,signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyAI0yekzN6HXw6KPR0whMpsd0AUQRRwuI4",
+          authDomain: "myclasssystem-a9051.firebaseapp.com",
+          databaseURL: "https://myclasssystem-a9051-default-rtdb.firebaseio.com",
+          projectId: "myclasssystem-a9051",
+          storageBucket: "myclasssystem-a9051.appspot.com",
+          messagingSenderId: "920203645327",
+          appId: "1:920203645327:web:d418c4f929d4bcb9573bfa"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database=getDatabase(app);
+        const auth = getAuth();
+
+ login.addEventListener('click',(e)=>{
+
+    var email=document.getElementById('email').value;
+    var password=document.getElementById('password').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    const dt=new Date();
+    update(ref(database,'users/'+user.uid),{
+     last_login:dt,       //never save our password to the database
+    })
+
+
+    alert('user loged in ');
+    // ...
+    window.location.replace("teacherLogin.html")
+    })
+    .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(error.message);
+    });
+
+    })
+
+      </script>
+</html>

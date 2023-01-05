@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Class System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+   <form1>
+    
+        <h3>Student Record</h3>
+        <div class="container mt-3">
+            <table class="table table-dark">
+            <thead>
+                <th>FirstName</th>
+                <th>SecondName</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>PhoneNumber</th>
+                <th>Grade</th>
+            </thead>
+            <tbody id="tbody1"></tbody>
+            </table>
+        </div>
+        <div class="FirstPageLink"><p><a href="index.html">Goto First Page</a></p></div>
+   </form1>
+        
+   <script type="module">
+
+    //-------------------------------------Filling Table-----------------------//
+
+    var tbody=document.getElementById("tbody1");
+
+
+    function AddItemToTable(firstName,secondName,gender,age,phoneNumber,grade){
+       let trow=document.createElement("tr");
+       let td1=document.createElement('td');
+       let td2=document.createElement('td');
+       let td3=document.createElement('td');
+       let td4=document.createElement('td');
+       let td5=document.createElement('td');
+       let td6=document.createElement('td');
+   
+
+      
+       td1.innerHTML=firstName;
+       td2.innerHTML=secondName;
+       td3.innerHTML=gender;
+       td4.innerHTML=age;
+       td5.innerHTML=phoneNumber;
+       td6.innerHTML=grade;
+
+
+       trow.appendChild(td1);
+       trow.appendChild(td2);
+       trow.appendChild(td3);
+       trow.appendChild(td4);
+       trow.appendChild(td5);
+       trow.appendChild(td6);
+
+       tbody.appendChild(trow);
+
+    }       
+
+    function AddAllItemToTable(Student){
+
+       tbody.innerHTML="";
+       Student.forEach(element=>{
+           AddItemToTable(element.FirstName,element.SecondName,element.Gender,element.Age,element.Number,element.Grade);
+       });
+    }
+       
+//------------------------------import + Configuration---------------------//
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAI0yekzN6HXw6KPR0whMpsd0AUQRRwuI4",
+    authDomain: "myclasssystem-a9051.firebaseapp.com",
+    databaseURL: "https://myclasssystem-a9051-default-rtdb.firebaseio.com",
+    projectId: "myclasssystem-a9051",
+    storageBucket: "myclasssystem-a9051.appspot.com",
+    messagingSenderId: "920203645327",
+    appId: "1:920203645327:web:d418c4f929d4bcb9573bfa"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+ import{
+   getDatabase,ref,child,onValue,get
+ }
+ from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+ const db=getDatabase();
+
+
+ //-----------------------------Get All Data---------------------------------------//
+
+ function GetAllDataOnce(){
+   const dbRef=ref(db);
+
+   get(child(dbRef,"Student"))
+   .then((snapshot)=>{
+     var Student=[];
+
+     snapshot.forEach(childSnapshot=>{
+        Student.push(childSnapshot.val());
+     });
+
+     AddAllItemToTable(Student);
+   })
+ }
+
+ window.onload=GetAllDataOnce;
+   </script>
+    
+    
+</body>
+</html>
