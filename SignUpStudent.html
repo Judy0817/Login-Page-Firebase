@@ -1,36 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Class System</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    
-</head>
+    <link rel="stylesheet" href="styleIndex.css">
+    <title>Registration Form</title>
+    </head>
 <body>
-    
-    <form1>
-      
+<section class="Form my-4 mx-5">
+<div class="wrapper">
+    <div class="container">
+        <div class="row no-gutters">
+        
+        <div class="col-lg-7 px-3 pt-4">
+            <h3>Registration Form</h3>
+           
+            <div class="form-row">
+                <div class="col-lg-7">
+                <input type="text" id="enterFirstName" placeholder="First Name" class="form-control">
+                <input type="text" id="enterSecondName" placeholder="Last Name" class="form-control">
+            </div>
+        </div>
 
-        <h1>Student Registration Form</h1>
-        <p>Name of the student<br><input type="text" id="enterFirstName"><input type="text" id="enterSecondName"></p>
-        <p>Guardian's Name<br><input type="text" id="enterFirstGName"><input type="text" id="enterSecondGName"></p>
-        <p>Date of Birth<br><input type="date" id="enterBirth" name="trip-start" value="2000-01-01" min="2018-01-01" max="2023-01-01"></p>
-        <p>Gender<br>
-            <input type="radio" name="gender" value="female" id="enterGender">Male
-            <input type="radio" name="gender" value="female" id="enterGender"> Female</p>
-        <p>Age<br><input type="number" id="enterAge">Grade<br><input type="number" id="enterGrade"></p>
-        <p>E-mail<br><input type="text" id="enterEmail">Contact Number<br><input type="text" id="enterNumber"></p>
+            <div class="form-row">
+                <input type="text" id="enterFirstGName" placeholder="Gaurdian's First Name" class="form-control">
+                <input type="text" id="enterSecondGName" placeholder="Gaurdian's Second Name" class="form-control">
+            </div>
 
+            <div class="form-row">
+                 <p>Date of Birth<br><input type="date" id="enterBirth" name="trip-start" min="2018-01-01" max="2023-01-01" placeholder="Date Of Birth" class="form-control">
+            </div>
 
+            <div class="form-row">
+                <p>Gender<br>
+                    <input type="radio" name="gender" value="female" id="enterGender">Male
+                    <input type="radio" name="gender" value="female" id="enterGender"> Female</p>
+            </div>
 
-        <p><input id="image" type="file" onchange="readURL(this)" accept="image/*"><br>
-        <button type="button" onclick="upload()">Upload</button></p>
+            <div class="form-row">
+                <input type="number" id="enterAge" placeholder="Age" class="form-control">
+                <input type="number" id="enterGrade" placeholder="Grade" class="form-control">
+            </div>
 
+            <div class="form-row">
+                <input type="text" id="enterEmail" placeholder="E-mail" class="form-control">
+                <input type="text" id="enterNumber" placeholder="Contact Number" class="form-control">
+            </div>
 
-        <button id="insert">Send</button>
-        <div class="FirstPageLink"><p><a href="index.html">Goto First Page</a></p></div>
-    </form1>
+            <input type="submit" id="insert" class="btn1 mt-3 mb-4" value="Register">
+       </div> 
+       </div>
+    </div>
+</div>
+</section>
+
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
 
         <script type="module">
 
@@ -123,6 +155,33 @@ function upload()
         
         });
 }
+
+
+
+
+
+/*<form1>
+      
+
+      <h1>Student Registration Form</h1>
+      <p>Name of the student<br><input type="text" id="enterFirstName"><input type="text" id="enterSecondName"></p>
+      <p>Guardian's Name<br><input type="text" id="enterFirstGName"><input type="text" id="enterSecondGName"></p>
+      <p>Date of Birth<br><input type="date" id="enterBirth" name="trip-start" value="2000-01-01" min="2018-01-01" max="2023-01-01"></p>
+      <p>Gender<br>
+          <input type="radio" name="gender" value="female" id="enterGender">Male
+          <input type="radio" name="gender" value="female" id="enterGender"> Female</p>
+      <p>Age<br><input type="number" id="enterAge">Grade<br><input type="number" id="enterGrade"></p>
+      <p>E-mail<br><input type="text" id="enterEmail">Contact Number<br><input type="text" id="enterNumber"></p>
+
+
+
+      <p><input id="image" type="file" onchange="readURL(this)" accept="image/*"><br>
+      <button type="button" onclick="upload()">Upload</button></p>
+
+
+      <button id="insert">Send</button>
+      <div class="FirstPageLink"><p><a href="index.html">Goto First Page</a></p></div>
+  </form1>*/
 
       </script>
       
