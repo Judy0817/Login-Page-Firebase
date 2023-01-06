@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
+          <!-- Required meta tags -->
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          
+          <!-- Bootstrap CSS -->
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+          <link rel="stylesheet" href="styleIndex.css">
+          <title>Forget Password</title>
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      
-       
-       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-       <link rel="stylesheet" href="styleIndex.css">
-       <title>Login</title>
-   
-   </head>
-<body>
+
+ </head>
+ <body>
 
     <section class="Form my-4 mx-5">
         <div class="container">
@@ -22,24 +22,25 @@
             </div>
             <div class="col-lg-7 px-3 pt-4">
               <h1 class="font-weight-bold py-2">Reset your password</h1>
-              <h4>Login As</h4>
-              
-               
+
                     <div class="form-row">
                     <div class="col-lg-7">
-                        <form action="student.html">
-                            <input type="submit" class="btn1 mt-3 mb-4" value="USER">
-                        </form>
+                        <p>please enter your e-mail address. </p>
                     </div>
                   </div>
-             
+
+               <div class="form-row">
+                  <div class="col-lg-7">
+                      <input type="text" id="email" name="email" placeholder="E-mail" class="form-control my-3 p-4">
+                  </div>
+                </div>
+
                 <div class="form-row">
                     <div class="col-lg-7">
-                        <form action="teacher.html">
-                            <input type="submit" class="btn1 mt-3 mb-4" value="ADMIN">
-                        </form>
+                        <button id="btn1-resetPassword" type="button">Reset Password</button>
                     </div>
                   </div>
+
                 </form>
             </div>
           </div>
@@ -51,7 +52,56 @@
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-</body>
 
+<script type="module">
+
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged ,signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+  import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAI0yekzN6HXw6KPR0whMpsd0AUQRRwuI4",
+    authDomain: "myclasssystem-a9051.firebaseapp.com",
+    databaseURL: "https://myclasssystem-a9051-default-rtdb.firebaseio.com",
+    projectId: "myclasssystem-a9051",
+    storageBucket: "myclasssystem-a9051.appspot.com",
+    messagingSenderId: "920203645327",
+    appId: "1:920203645327:web:d418c4f929d4bcb9573bfa"
+  };
+
+  // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database=getDatabase(app);
+    const auth = getAuth();
+
+
+    $("#btn1-resetPassword").click(function(){
+      var auth=firebase.auth();
+      var email=$("#email").val();
+
+      if(email!="")
+      {
+        auth.sendPasswordResetEmail(email).then(function(){
+          window.alert("E-mail has been sent.");
+        })
+        .catch(function(error){
+          const errorCode = error.code;
+          const errorMessage = error.message;
+    // ..
+           alert(error.message);
+        });
+      }
+
+      else{
+        window.alert("Please enter your E-mail first.");
+      }
+    });
+
+</script>
+
+</body>
 </html>
-    
