@@ -11,7 +11,29 @@
    <form1>
     
         <h3>Student Record</h3>
-        <div class="container mt-3">
+
+        <!----------------serach section start---------------------------------------------->
+
+
+        <div class="container mt-3 mt-3">
+          <div class="input-group mb-3">
+            <input id="SearchBar" type="text" class="form-control" placeholder="Search A Record" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <select class="form-select" id="CategorySelected">
+              <option selected>Choose...</option>
+              <option value="1">FirstName</option>
+              <option value="2">SecondName</option>
+              <option value="3">Gender</option>
+              <option value="4">Age</option>
+              <option value="5">PhoneNumber</option>
+              <option value="6">Grade</option>
+            </select>
+            <button id="SearchBtn" class="btn btn-outline-primary ml-1" type="button" id="button-addon2">Search</button>
+          </div>
+
+
+
+
+
             <table class="table table-dark">
             <thead>
                 <th>FirstName</th>
@@ -51,6 +73,13 @@
        td4.innerHTML=age;
        td5.innerHTML=phoneNumber;
        td6.innerHTML=grade;
+
+      td1.classList +="firstNameField";
+      td2.classList +="secondNameField";
+      td3.classList +="genderField";
+      td4.classList +="ageField";
+      td5.classList +="numberField";
+      td6.classList +="gradeField";
 
 
        trow.appendChild(td1);
@@ -118,6 +147,61 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
  }
 
  window.onload=GetAllDataOnce;
+
+var searchbar=document.getElementById("SearchBar");
+var searchBtn=document.getElementById("SearchBtn");
+var category=document.getElementById("CategorySelected");
+var tbody=document.getElementById("tbody1");
+
+function SearchTableByExactValues(){
+  var filter=searchbar.value.toUpperCase();
+  var tr=tbody.getElementsByTagName("tr");
+
+  for(let i=0;i<tr.length;i++){
+    
+    var td=tr[i].getElementsByClassName(Category);
+    
+    for(let j=0;j<td.length;j++){
+      if(td[j].innerHTML.toUpperCase()==filter){
+        found=true;
+      }
+    }
+    if(found){
+      tr[i].style.display="";
+      found=false;
+    }
+
+    else{
+      tr[i].style.display="none";
+    }
+
+  }
+  searchBtn.onclick=function(){
+    if(searchbar.value==""){
+      SearchTableByExactValues("firstNameField");
+    }
+
+    else if(category.value==1)
+    SearchTableByExactValues("firstNameField");
+
+    else if(category.value==2)
+    SearchTableByExactValues("secondNameField");
+
+    else if(category.value==3)
+    SearchTableByExactValues("genderField");
+
+    else if(category.value==4)
+    SearchTableByExactValues("ageField");
+
+    else if(category.value==5)
+    SearchTableByExactValues("numberField");
+
+    else if(category.value==6)
+    SearchTableByExactValues("gradeField");
+
+  }
+}
+
    </script>
     
     

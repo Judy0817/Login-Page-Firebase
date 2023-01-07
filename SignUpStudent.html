@@ -55,7 +55,7 @@
             </div>
 
             <div class="form-row">
-                <div class="col-lg-7">
+                <div class="col-lg-12">
                     <input type="text" id="enterNumber" name="enterNumber" placeholder="Number"  class="form-control my-3 p-4">
                 </div>
             </div>
@@ -63,14 +63,14 @@
 
             <div class="form-row">
                 <div class="col-lg-12">
-                    <p>Date of Birth<br><input type="date" id="enterBirth" name="trip-start" min="2018-01-01" max="2023-01-01" placeholder="Date Of Birth" class="form-control">
+                    <p class="word">Date of Birth<br><input type="date" id="enterBirth" name="trip-start" min="2018-01-01" max="2023-01-01" placeholder="Date Of Birth" class="form-control">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="col-lg-12">
-                    <p>Gender<br>
-                    <input type="radio" name="gender" value="female" id="enterGender" >     Male 
+                    <p class="word">Gender<br>
+                    <input type="radio" name="gender" value="male" id="enterGender" >     Male 
                     <input type="radio" name="gender" value="female" id="enterGender">     Female 
                 </div>
             </div>
@@ -80,70 +80,15 @@
                     <input type="submit" id="insert" class="btn1 mt-3 mb-4" value="Register">
                  </div>
              </div>
+
+            
+             <button id="remove">REMOVE</button>
              
         
          </div>
          </div>
          </div>
          </section>
-
-<script>
-    /*
-<div class="container">
-    <div class="heading">
-        Registration
-    </div>
-    <div class="card-details">
-        <div class="card-box">
-            <span class="details">First Name</span>
-            <input type="text" id="enterFirstName" placeholder="First Name">
-        </div>
-
-        <div class="card-box">
-            <span class="details">Last Name</span>
-            <input type="text" id="enterSecondName" placeholder="Last Name">
-        </div>
-
-        <div class="card-box">
-            <span class="details">Gaurdian First Name</span>
-            <input type="text" id="enterFirstGName" placeholder="Gaurdian's First Namel">
-                
-        </div>
-
-        <div class="card-box">
-            <span class="details">Gaurdian Second Name</span>
-            <input type="text" id="enterSecondGName" placeholder="Gaurdian's Second Name">
-        </div>
-
-        <div class="card-box">
-            <span class="details">Age</span>
-            <input type="number" id="enterAge" placeholder="Age" >
-        </div>
-
-        <div class="card-box">
-            <span class="details">Grade</span>
-            <input type="number" id="enterGrade" placeholder="Grade" >
-        </div>
-
-        <div class="card-box">
-            <span class="details">Date Of Birth</span>
-            <input type="date" id="enterBirth" name="trip-start" min="2018-01-01" max="2023-01-01" placeholder="Date Of Birth" >
-       </div>
-
-    </div>
-    <div class="crical-form">
-        <span class="cricle-title">Gender</span>
-        <div class="category">
-            <input type="radio" name="gender" value="female" id="enterGender">Male
-            <input type="radio" name="gender" value="female" id="enterGender"> Female
-        </div>
-    </div>
-
-    
-        <input type="submit" id="insert" class="btn1 mt-3 mb-4" value="Register">
-    
-
-</div>/*
 </script>
     
 
@@ -193,6 +138,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
                     
                     
                     var insertBtn=document.querySelector("#insert");
+                    var selecBtn=document.querySelector("#select");
+                    var removeBtn=document.querySelector("#remove");
                    
 
                     function InsertData()
@@ -215,10 +162,60 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
                         .catch((error)=>{
                             alert(error)
                         });
+
+                
                     }
 
                     insertBtn.addEventListener('click',InsertData);
 
+                    function selectData()
+                    {
+                        const dbref=ref(db);
+                        get(child(dbref,"Student/" + enterFirstName.value)).then((snapshot)=>{
+                            if(snapshot.exists()){
+                                enterSecondName.value=snapshot.val().SecondName;
+                                enterFirstGName.value=snapshot.val().FirstGName;
+                                enterSecondGName.value=snapshot.val().SecondGName;
+                                enterAge.value=snapshot.val().Age;
+                                enterGrade.value=snapshot.val().Grade;
+                                enterNumber.value=snapshot.val().Number;
+                                enterBirth.value=snapshot.val().Birthday;
+                                enterGender.value=snapshot.val().Gender;
+                            }
+                            else{
+                                alert("No data found");
+                            }
+                        })
+                        .catch((error)=>{
+                            alert(error);
+                        })
+
+                        
+                    }
+                    selecBtn.addEventListener('click',selectData);
+
+                    function RemoveData()
+                    {
+                        remove(ref(db,"Student/"+enterFirstName.value),{
+                            FirstName: enterFirstName,
+                            SecondName: enterSecondName,
+                            FirstGName: enterFirstGName,
+                            SecondGName: enterSecondGName,
+                            Age: enterAge,
+                            Grade: enterGrade,
+                            Number: enterNumber,
+                            Birthday: enterBirth,
+                            Gender: enterGender
+                        })
+                        .then(()=>{
+                            alert("Your data removed. Fill again. ")
+                        })
+                        .catch((error)=>{
+                            alert(error)
+                        });
+
+                    }
+                    removeBtn.addEventListener('click',RemoveData);
     //---------------------------------GetImage----------------------------------------------//
 
 import{getStorage,ref as sRef,uploadBytesResumable,getDownloadURL} 
@@ -245,59 +242,7 @@ function upload()
         });
 }
 
-
-
-
-
-
-
-
-/*
-<div class="container">
-        <div class="row no-gutters">
-        
-        <div class="col-lg-7 px-3 pt-4">
-            <h3>Registration Form</h3>
-           
-            <div class="form-row">
-               
-                <input type="text" id="enterFirstName" placeholder="First Name" class="form-control">
-                <input type="text" id="enterSecondName" placeholder="Last Name" class="form-control">
-            
-        </div>
-
-            <div class="form-row">
-                <input type="text" id="enterFirstGName" placeholder="Gaurdian's First Name" class="form-control">
-                <input type="text" id="enterSecondGName" placeholder="Gaurdian's Second Name" class="form-control">
-            </div>
-
-            <div class="form-row">
-                 <p>Date of Birth<br><input type="date" id="enterBirth" name="trip-start" min="2018-01-01" max="2023-01-01" placeholder="Date Of Birth" class="form-control">
-            </div>
-
-            <div class="form-row">
-                <p>Gender<br>
-                    <input type="radio" name="gender" value="female" id="enterGender">Male
-                    <input type="radio" name="gender" value="female" id="enterGender"> Female</p>
-            </div>
-
-            <div class="form-row">
-                <input type="number" id="enterAge" placeholder="Age" class="form-control">
-                <input type="number" id="enterGrade" placeholder="Grade" class="form-control">
-            </div>
-
-            <div class="form-row">
-                <input type="text" id="enterEmail" placeholder="E-mail" class="form-control">
-                <input type="text" id="enterNumber" placeholder="Contact Number" class="form-control">
-            </div>
-
-            <input type="submit" id="insert" class="btn1 mt-3 mb-4" value="Register">
-       </div> 
-       </div>
-    </div>
-
-
-*/
+          
       </script>
       
 </body>

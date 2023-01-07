@@ -4,20 +4,21 @@
     margin:0;
     box-sizing: border-box;
 }
+.word{
+    color: white;
+}
 
 body{
-     background: rgb(66, 69, 88);
+    background: rgb(66, 69, 88);
      align-items: center;
      height: 100vh;
      justify-content: center;
-   
-   
 }
 
 .container{
       width: 100%;
     max-width: 800px;
-    background: rgba(250, 242, 242, 0.5);
+    background: rgba(8, 8, 8, 0.5);
     padding: 28px;
     margin: 0 28px;
     border-radius: 10px;
