@@ -8,7 +8,7 @@
           <!-- Bootstrap CSS -->
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
           <link rel="stylesheet" href="styleIndex.css">
-          <title>Forget Password</title>
+          <title>Forget Password Student</title>
 
 
  </head>
@@ -37,7 +37,7 @@
 
                 <div class="form-row">
                     <div class="col-lg-7">
-                        <button class="btn1" type="button">Reset Password</button>
+                        <button class="btn1" type="button" id="btn1-ResetPassword">Reset Password</button>
                     </div>
                   </div>
 
@@ -56,8 +56,8 @@
 <script type="module">
 
   // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-  import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged ,signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+  import { ggetAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged ,signOut,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
   import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -79,7 +79,7 @@
     const auth = getAuth();
 
 
-    $("#btn1-resetPassword").click(function(){
+   /* $("#btn1-ResetPassword").click(function(){
       var auth=firebase.auth();
       var email=$("#email").val();
 
@@ -92,14 +92,34 @@
           const errorCode = error.code;
           const errorMessage = error.message;
     // ..
-           alert(error.message);
+           alert('You entered Email is Incorrect..!');
         });
       }
 
       else{
         window.alert("Please enter your E-mail first.");
       }
-    });
+    });*/
+
+
+let reset=document.querySelector("#btn1-ResetPassword")
+reset.addEventListener("click",function(){
+
+  let email=document.querySelector("#email")
+
+  
+  sendPasswordResetEmail(auth, email.value)
+  .then(() => {
+    // Password reset email sent!
+    // ..
+    console.log("Reset password Link send")
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+});
 
 </script>
 

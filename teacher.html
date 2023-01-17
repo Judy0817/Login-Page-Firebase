@@ -89,7 +89,7 @@
     // Signed in 
     const user = userCredential.user;
     const dt=new Date();
-    update(ref(database,'users/'+user.uid),{
+    update(ref(database,'Teachers Account Details/'+user.uid),{
      last_login:dt,       //never save our password to the database
     })
 
@@ -101,7 +101,7 @@
     .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    alert(error.message);
+    alert('You entered Email or Password is Incorrect');
     });
 
     })
