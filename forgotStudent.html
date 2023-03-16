@@ -57,9 +57,9 @@
 <script type="module">
 
   // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-  import { ggetAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged ,signOut,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-  import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+  import { getAuth,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+  import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -73,54 +73,33 @@
     messagingSenderId: "920203645327",
     appId: "1:920203645327:web:d418c4f929d4bcb9573bfa"
   };
-
   // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const database=getDatabase(app);
     const auth = getAuth();
 
 
-   /* $("#btn1-ResetPassword").click(function(){
-      var auth=firebase.auth();
-      var email=$("#email").val();
+    var submitBtn=document.querySelector("#btn1-ResetPassword");
+    
+    function resetPassword()
+    {
+      var email=document.getElementById('email').value;
+      sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert("Password reset email send successfully!");
+        console.log("reset email");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert("reset password email failed")
+      });
+    }
 
-      if(email!="")
-      {
-        auth.sendPasswordResetEmail(email).then(function(){
-          window.alert("E-mail has been sent.");
-        })
-        .catch(function(error){
-          const errorCode = error.code;
-          const errorMessage = error.message;
-    // ..
-           alert('You entered Email is Incorrect..!');
-        });
-      }
-
-      else{
-        window.alert("Please enter your E-mail first.");
-      }
-    });*/
+    submitBtn.addEventListener('click',resetPassword);
 
 
-let reset=document.querySelector("#btn1-ResetPassword")
-reset.addEventListener("click",function(){
 
-  let email=document.querySelector("#email")
-
-  
-  sendPasswordResetEmail(auth, email.value)
-  .then(() => {
-    // Password reset email sent!
-    // ..
-    console.log("Reset password Link send")
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
-});
 
 </script>
 

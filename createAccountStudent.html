@@ -44,6 +44,7 @@
                      <button type="submit" id="signUp" class="btn1 mt-3 mb-4" name="signup_submit">Sign Up</button>
                  </div>
              </div>
+
          </div>
          </div>
          </div>
@@ -57,22 +58,22 @@
 
 <script type="module">
     // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-    import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import { getDatabase,set,ref,update } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+    import { getAuth,signInWithEmailAndPassword, createUserWithEmailAndPassword,onAuthStateChanged  } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
   
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyAI0yekzN6HXw6KPR0whMpsd0AUQRRwuI4",
-      authDomain: "myclasssystem-a9051.firebaseapp.com",
-      databaseURL: "https://myclasssystem-a9051-default-rtdb.firebaseio.com",
-      projectId: "myclasssystem-a9051",
-      storageBucket: "myclasssystem-a9051.appspot.com",
-      messagingSenderId: "920203645327",
-      appId: "1:920203645327:web:d418c4f929d4bcb9573bfa"
-    };
+    apiKey: "AIzaSyAI0yekzN6HXw6KPR0whMpsd0AUQRRwuI4",
+    authDomain: "myclasssystem-a9051.firebaseapp.com",
+    databaseURL: "https://myclasssystem-a9051-default-rtdb.firebaseio.com",
+    projectId: "myclasssystem-a9051",
+    storageBucket: "myclasssystem-a9051.appspot.com",
+    messagingSenderId: "920203645327",
+    appId: "1:920203645327:web:d418c4f929d4bcb9573bfa"
+  };
   
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
@@ -94,16 +95,51 @@
     userName:userName,
     email:email,        //never save our password to the database
     })
-    alert('Account created');
-    window.location.replace("SignUpStudent.html")
+    //alert('Account created');
+    //window.location.replace("SignUpStudent.html")
     // ...
     })
     .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
     // ..
-    alert('You entered Email or Password is Incorrect');
+    //alert('You entered Email or Password is Incorrect');
     });
+
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+    // Signed in 
+    const dt=new Date();
+    const user = userCredential.user;
+    update(ref(database,'Students Account Details/'+user.uid),{
+    last_login:dt,        //never save our password to the database
     })
+    alert('Account created and User Logged');
+    window.location.replace("SignUpStudent.html")
+          //never save our password to the database
+    })
+
+    .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+    alert(errorMessage);
+    });
+
+    })
+
+
+    const user=auth.currentUser;
+    onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const uid=user.uid;
+
+  } else {
+    
+  }
+});
+    
+
+
   </script>
 </html>

@@ -67,6 +67,7 @@
                 </div>
             </div>
 
+
             <div class="form-row">
                 <div class="col-lg-12">
                     <p class="word">Gender<br>
@@ -81,8 +82,7 @@
                  </div>
              </div>
 
-            
-             <button id="remove">REMOVE</button>
+           
              
         
          </div>
@@ -103,14 +103,16 @@
 
 //------------------------------------getData-----------------------------------//
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+  import { getDatabase,set,get,update,remove,ref,child } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+  import { getAuth,signInWithEmailAndPassword, createUserWithEmailAndPassword,onAuthStateChanged  } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+    
 
-  // Your web app's Firebase configuration
+
   const firebaseConfig = {
     apiKey: "AIzaSyAI0yekzN6HXw6KPR0whMpsd0AUQRRwuI4",
     authDomain: "myclasssystem-a9051.firebaseapp.com",
+    databaseURL: "https://myclasssystem-a9051-default-rtdb.firebaseio.com",
     projectId: "myclasssystem-a9051",
     storageBucket: "myclasssystem-a9051.appspot.com",
     messagingSenderId: "920203645327",
@@ -119,11 +121,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+  const db =getDatabase();
+  
         
-        import {getDatabase,set,get,update,remove,ref,child}
-        from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
-        
-        const db =getDatabase();
         
         
                     var enterFirstName=document.querySelector("#enterFirstName");
@@ -137,6 +138,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
                     var enterGender=document.querySelector("#enterGender");
                     
                     
+                    
                     var insertBtn=document.querySelector("#insert");
                     var selecBtn=document.querySelector("#select");
                     var removeBtn=document.querySelector("#remove");
@@ -144,7 +146,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
 
                     function InsertData()
                     {
-                        set(ref(db,"Student/"+enterFirstName.value ),{
+                    
+                        set(ref(db,"Student/"+ enterFirstName.value),{
                             FirstName:enterFirstName.value,
                             SecondName:enterSecondName.value,
                             FirstGName:enterFirstGName.value,
@@ -154,7 +157,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
                             Number:enterNumber.value,
                             Birthday:enterBirth.value,
                             Gender:enterGender.value,
-                            
+                           
                         })
                         .then(()=>{
                             alert("Data added Successfully!")
@@ -162,63 +165,62 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
                         .catch((error)=>{
                             alert(error)
                         });
-
-                
+                      
                     }
 
                     insertBtn.addEventListener('click',InsertData);
 
-                    function selectData()
-                    {
-                        const dbref=ref(db);
-                        get(child(dbref,"Student/" + enterFirstName.value)).then((snapshot)=>{
-                            if(snapshot.exists()){
-                                enterSecondName.value=snapshot.val().SecondName;
-                                enterFirstGName.value=snapshot.val().FirstGName;
-                                enterSecondGName.value=snapshot.val().SecondGName;
-                                enterAge.value=snapshot.val().Age;
-                                enterGrade.value=snapshot.val().Grade;
-                                enterNumber.value=snapshot.val().Number;
-                                enterBirth.value=snapshot.val().Birthday;
-                                enterGender.value=snapshot.val().Gender;
-                            }
-                            else{
-                                alert("No data found");
-                            }
-                        })
-                        .catch((error)=>{
-                            alert(error);
-                        })
+                    // function selectData()
+                    // {
+                    //     const dbref=ref(db);
+                    //     get(child(dbref,"Student/" + enterFirstName.value)).then((snapshot)=>{
+                    //         if(snapshot.exists()){
+                    //             enterSecondName.value=snapshot.val().SecondName;
+                    //             enterFirstGName.value=snapshot.val().FirstGName;
+                    //             enterSecondGName.value=snapshot.val().SecondGName;
+                    //             enterAge.value=snapshot.val().Age;
+                    //             enterGrade.value=snapshot.val().Grade;
+                    //             enterNumber.value=snapshot.val().Number;
+                    //             enterBirth.value=snapshot.val().Birthday;
+                    //             enterGender.value=snapshot.val().Gender;
+                    //         }
+                    //         else{
+                    //             alert("No data found");
+                    //         }
+                    //     })
+                    //     .catch((error)=>{
+                    //         alert(error);
+                    //     })
                         
-                    }
-                    selecBtn.addEventListener('click',selectData);
+                    // }
+                    // selecBtn.addEventListener('click',selectData);
 
-                    function RemoveData()
-                    {
-                        remove(ref(db,"Student/"+enterFirstName.value),{
-                            FirstName: enterFirstName,
-                            SecondName: enterSecondName,
-                            FirstGName: enterFirstGName,
-                            SecondGName: enterSecondGName,
-                            Age: enterAge,
-                            Grade: enterGrade,
-                            Number: enterNumber,
-                            Birthday: enterBirth,
-                            Gender: enterGender
-                        })
-                        .then(()=>{
-                            alert("Your data removed. Fill again. ")
-                        })
-                        .catch((error)=>{
-                            alert(error)
-                        });
+                    // function RemoveData()
+                    // {
+                    //     remove(ref(db,"Student/"+enterFirstName.value),{
+                    //         FirstName: enterFirstName,
+                    //         SecondName: enterSecondName,
+                    //         FirstGName: enterFirstGName,
+                    //         SecondGName: enterSecondGName,
+                    //         Age: enterAge,
+                    //         Grade: enterGrade,
+                    //         Number: enterNumber,
+                    //         Birthday: enterBirth,
+                    //         Gender: enterGender
+                    //     })
+                    //     .then(()=>{
+                    //         alert("Your data removed. Fill again. ")
+                    //     })
+                    //     .catch((error)=>{
+                    //         alert(error)
+                    //     });
 
-                    }
-                    removeBtn.addEventListener('click',RemoveData);
+                    // }
+                    // removeBtn.addEventListener('click',RemoveData);
     //---------------------------------GetImage----------------------------------------------//
 
 import{getStorage,ref as sRef,uploadBytesResumable,getDownloadURL} 
-from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js";
+from "https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js";
                     
 function upload()
 {
@@ -240,6 +242,8 @@ function upload()
         
         });
 }
+
+
 
           
       </script>

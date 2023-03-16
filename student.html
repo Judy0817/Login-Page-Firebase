@@ -57,22 +57,22 @@
 
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-        import { getDatabase,set,ref,update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-        import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged ,signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+        import { getDatabase,set,ref,update } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged ,signOut } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
       
         // Your web app's Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyAI0yekzN6HXw6KPR0whMpsd0AUQRRwuI4",
-          authDomain: "myclasssystem-a9051.firebaseapp.com",
-          databaseURL: "https://myclasssystem-a9051-default-rtdb.firebaseio.com",
-          projectId: "myclasssystem-a9051",
-          storageBucket: "myclasssystem-a9051.appspot.com",
-          messagingSenderId: "920203645327",
-          appId: "1:920203645327:web:d418c4f929d4bcb9573bfa"
-        };
+    apiKey: "AIzaSyAI0yekzN6HXw6KPR0whMpsd0AUQRRwuI4",
+    authDomain: "myclasssystem-a9051.firebaseapp.com",
+    databaseURL: "https://myclasssystem-a9051-default-rtdb.firebaseio.com",
+    projectId: "myclasssystem-a9051",
+    storageBucket: "myclasssystem-a9051.appspot.com",
+    messagingSenderId: "920203645327",
+    appId: "1:920203645327:web:d418c4f929d4bcb9573bfa"
+  };
       
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
@@ -96,7 +96,7 @@ login.addEventListener('click',(e)=>{
 
     alert('User loged in ');
     // ...
-    window.location.replace("SignUpStudent.html")
+    window.location.replace("profile.html")
     })
     .catch((error) => {
     const errorCode = error.code;
@@ -104,6 +104,18 @@ login.addEventListener('click',(e)=>{
     alert('You entered Email or Password is Incorrect');
     });
 
+
+    onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
     })
 
  </script>
