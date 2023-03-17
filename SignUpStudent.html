@@ -143,22 +143,24 @@
                     var selecBtn=document.querySelector("#select");
                     var removeBtn=document.querySelector("#remove");
                    
-                    const user=auth.currentUser;
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
-         const uid=user.uid;
-         alert(uid);
-         //InsertData(uid);
-         insertBtn.addEventListener('click',InsertData);
+                    
+    // onAuthStateChanged(auth, (user) => {
+    // if (user) {
+    //      const uid=user.uid;
+    //      alert(uid);
+    //      //InsertData(uid);
+    //      insertBtn.addEventListener('click',InsertData);
 
-    } else {
-        //alert("Not signIn!")
-    }
-    });
+    // } else {
+    //     //alert("Not signIn!")
+    // }
+    // });
 
-                    function InsertData(uid)
+                    function InsertData()
                     {
                         const user=auth.currentUser;
+                        const uid=user.uid;
+
                         set(ref(db,"Student/"+ uid),{
                             FirstName:enterFirstName.value,
                             SecondName:enterSecondName.value,
@@ -179,6 +181,7 @@
                         });
                       
                     }
+                    insertBtn.addEventListener('click',InsertData);
 
                     
 
