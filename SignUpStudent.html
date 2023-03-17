@@ -143,11 +143,23 @@
                     var selecBtn=document.querySelector("#select");
                     var removeBtn=document.querySelector("#remove");
                    
+                    const user=auth.currentUser;
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+         const uid=user.uid;
+         alert(uid);
+         //InsertData(uid);
+         insertBtn.addEventListener('click',InsertData);
 
-                    function InsertData()
+    } else {
+        //alert("Not signIn!")
+    }
+    });
+
+                    function InsertData(uid)
                     {
-                    
-                        set(ref(db,"Student/"+ enterFirstName.value),{
+                        const user=auth.currentUser;
+                        set(ref(db,"Student/"+ uid),{
                             FirstName:enterFirstName.value,
                             SecondName:enterSecondName.value,
                             FirstGName:enterFirstGName.value,
@@ -168,7 +180,7 @@
                       
                     }
 
-                    insertBtn.addEventListener('click',InsertData);
+                    
 
                     // function selectData()
                     // {

@@ -123,18 +123,24 @@
   const auth = getAuth();
   const db =getDatabase();
 
-  onAuthStateChanged(auth, (user) => {
-  if (user) {
-    getdata(user);
-  } else {
-    
-  }
-});
+  const user=auth.currentUser;
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+         const uid=user.uid;
+         alert(uid);
+         getdata(uid);
+
+    } else {
+        //alert("Not signIn!")
+    }
+    });
 
 
-function getdata(user)
+function getdata(uid)
   {
-    get(ref(db,'Student/'+user.uid))
+    const user=auth.currentUser;
+    //const uid=user.uid;
+    get(ref(db,'Student/'+uid))
     .then((snapshot)=>{
       
         var firstName=snapshot.val().FirstName;
@@ -160,16 +166,7 @@ function getdata(user)
         
     })
   }
-
-                    
-
-
-                    
-
-
-
-
-          
+       
       </script>
       
 </body>

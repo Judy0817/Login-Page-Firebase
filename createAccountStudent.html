@@ -60,7 +60,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
     import { getDatabase,set,ref,update } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
-    import { getAuth,signInWithEmailAndPassword, createUserWithEmailAndPassword,onAuthStateChanged  } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+    import { getAuth,signInWithEmailAndPassword, createUserWithEmailAndPassword,onAuthStateChanged,sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
   
@@ -80,6 +80,18 @@
     const database=getDatabase(app);
     const auth = getAuth();
 
+    
+    const user=auth.currentUser;
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+         const uid=user.uid;
+        // alert("Wow you are signIn!")
+
+    } else {
+        //alert("Not signIn!")
+    }
+    });
+
     signUp.addEventListener('click',(e)=>{
 
     var email=document.getElementById('email').value;
@@ -90,21 +102,17 @@
     .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
+    const auth = getAuth();
+//     sendEmailVerification(auth.currentUser)
+//     .then(() => {
+//         alert('E-mail Verification sent.');
+//   });
 
     set(ref(database,'Students Account Details/'+user.uid),{
     userName:userName,
     email:email,        //never save our password to the database
     })
-    //alert('Account created');
-    //window.location.replace("SignUpStudent.html")
-    // ...
     })
-    .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-    //alert('You entered Email or Password is Incorrect');
-    });
 
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
@@ -112,32 +120,23 @@
     const dt=new Date();
     const user = userCredential.user;
     update(ref(database,'Students Account Details/'+user.uid),{
-    last_login:dt,        //never save our password to the database
+    last_login:dt,        
     })
     alert('Account created and User Logged');
     window.location.replace("SignUpStudent.html")
-          //never save our password to the database
+          
     })
 
     .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    // ..
-    alert(errorMessage);
+    
+    //alert(errorMessage);
     });
 
     })
 
 
-    const user=auth.currentUser;
-    onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const uid=user.uid;
-
-  } else {
-    
-  }
-});
     
 
 
