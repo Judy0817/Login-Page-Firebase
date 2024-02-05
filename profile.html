@@ -13,83 +13,63 @@
 <body>
     <section class="Form my-4 mx-5">
         <div class="container">
-         <div class="row no-gutters">
-            
-     <div class="col-lg-7 px-3 pt-3">
-         <h1 class="font-weight-bold ">Registration</h1>
-         
-             <div class="form-row">
-                <div class="col-lg-12">
-                    
-                     <p id="enterFirstName" class="form-control form-control"></p>
-                </div>
-             </div>
- 
-             <div class="form-row">
-                <div class="col-lg-12">
-                     
-                     <p id="enterSecondName" class="form-control form-control"></p>
-                </div>
-             </div>
-
-             <div class="form-row">
-                <div class="col-lg-12">
-                    
-                    <p id="enterFirstGName" class="form-control form-control"></p>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-12">
-                    
-                    <p id="enterSecondGName" class="form-control form-control"></p>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-12">
-                   
-                    <p id="enterAge" class="form-control form-control"></p>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-12">
-                    
-                    <p id="enterGrade" class="form-control form-control"></p>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-12">
-                   
-                    <p id="enterNumber" class="form-control form-control"></p>
-                </div>
-            </div>
-
-
-            <div class="form-row">
-                <div class="col-lg-12">
-                    
-                    <p id="enterBirth" class="form-control form-control"></p>
+            <div class="row no-gutters">
+                <div class="col-lg-7 px-3 pt-3">
+                    <h1 class="font-weight-bold">Registration</h1>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <input type="text" id="enterFirstName" class="form-control" placeholder="Enter First Name" >
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <input type="text" id="enterSecondName" class="form-control" placeholder="Enter Second Name" >
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <input type="text" id="enterFirstGName" class="form-control" placeholder="Enter First Gardiean Name" >
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <input type="text" id="enterSecondGName" class="form-control" placeholder="Enter Second Gardiean Name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <input type="text" id="enterAge" class="form-control" placeholder="Enter Age">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <input type="text" id="enterGrade" class="form-control" placeholder="Enter Grade">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <input type="text" id="enterNumber" class="form-control" placeholder="Enter Number">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <input type="text" id="enterBirth" class="form-control" placeholder="Enter Birthday">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <input type="text" id="enterGender" class="form-control" placeholder="Enter Gender">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <button type="button" class="btn btn-primary" onclick="getdata()">Submit</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-row">
-                <div class="col-lg-12">
-                    <p class="word">Gender<br>
-                    
-                    <p id="enterGender" class="form-control form-control"></p>
-                </div>
-            </div>
-         
-  
-             
-        
-         </div>
-         </div>
-         </div>
-         </section>
+        </div>
+    </section>
 </script>
     
 
@@ -136,36 +116,25 @@
     });
 
 
-function getdata(uid)
-  {
-    const user=auth.currentUser;
-    //const uid=user.uid;
-    get(ref(db,'Student/'+uid))
-    .then((snapshot)=>{
-      
-        var firstName=snapshot.val().FirstName;
-        var secondName=snapshot.val().SecondName;
-        var firstGName=snapshot.val().FirstGName;
-        var secondGName=snapshot.val().SecondGName;
-        var age=snapshot.val().Age;
-        var grade=snapshot.val().Grade;
-        var number=snapshot.val().Number;
-        var birthday=snapshot.val().Birthday;
-        var gender=snapshot.val().Gender;
-
-
-        document.getElementById('enterFirstName').innerHTML=firstName;
-        document.getElementById('enterSecondName').innerHTML=secondName;
-        document.getElementById('enterFirstGName').innerHTML=firstGName;
-        document.getElementById('enterSecondGName').innerHTML=secondGName;
-        document.getElementById('enterAge').innerHTML=age;
-        document.getElementById('enterGrade').innerHTML=grade;
-        document.getElementById('enterNumber').innerHTML=number;
-        document.getElementById('enterBirth').innerHTML=birthday;
-        document.getElementById('enterGender').innerHTML=gender;
-        
-    })
-  }
+    function getdata(uid) {
+            const user = auth.currentUser;
+            get(ref(db, 'Student/' + uid))
+                .then((snapshot) => {
+                    const data = snapshot.val();
+                    document.getElementById('enterFirstName').value = data.FirstName;
+                    document.getElementById('enterSecondName').value = data.SecondName;
+                    document.getElementById('enterFirstGName').value = data.FirstGName;
+                    document.getElementById('enterSecondGName').value = data.SecondGName;
+                    document.getElementById('enterAge').value = data.Age;
+                    document.getElementById('enterGrade').value = data.Grade;
+                    document.getElementById('enterNumber').value = data.Number;
+                    document.getElementById('enterBirth').value = data.Birthday;
+                    document.getElementById('enterGender').value = data.Gender;
+                })
+                .catch((error) => {
+                    console.error("Error reading data: ", error);
+                });
+        }
        
       </script>
       
